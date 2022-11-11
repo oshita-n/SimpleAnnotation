@@ -15,9 +15,10 @@ export default function Home() {
         <div className="flex flex-col w-screen h-screen">
           <Header />
           {/* container */}
-          <div className="flex flex-row justify-center ...">
+          <div className="flex flex-row justify-center relative ...">
             <Canvas />
           </div>
+          
           <div className="flex flex-row justify-center">
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               前の画像へ
