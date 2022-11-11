@@ -56,7 +56,7 @@ export default function Home() {
         // 描画処理
         canvasContext.fillStyle = '#00ff00'
         canvasContext.beginPath()
-        canvasContext.ellipse(x, y, 6, 6, 0, 0, Math.PI * 2);
+        canvasContext.ellipse(x, y, 3, 3, 0, 0, Math.PI * 2);
         canvasContext.fill()
         canvasContext.closePath()
     }
