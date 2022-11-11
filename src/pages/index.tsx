@@ -24,7 +24,7 @@ export default function Home() {
         const img = new Image()
         img.src = "elon.jpg" // 描画する画像など
         img.onload = () => {
-            context.drawImage(img, (1280 - img.width/2)/2 ,(780 - img.height/2)/2, img.width/2, img.height/2)
+            context.drawImage(img, (1280 - img.width/2)/2 ,(600 - img.height/2)/4, img.width/2, img.height/2)
             // 更にこれに続いて何か処理をしたい場合
             setLoaded(true)
         }
@@ -75,8 +75,16 @@ export default function Home() {
         <div className="flex flex-col w-screen h-screen">
           <Header />
           {/* container */}
-          <div className="flex frex-row justify-center ...">
-            <canvas width="1280" height="720" id="canvas"></canvas>
+          <div className="flex flex-row justify-center ...">
+            <canvas width="1280" height="600" id="canvas"></canvas>
+          </div>
+          <div className="flex flex-row justify-center">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              前の画像へ
+            </button>
+            <button className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              次の画像へ
+            </button>
           </div>
         </div>
       </div>
