@@ -15,7 +15,7 @@ export default function Home() {
         <div className="flex flex-col w-screen h-[600px]">
           <Header />
           {/* container */}
-          <div className="flex m-0">
+          <div className="flex m-5">
             <Canvas />    
           </div>
         </div>
