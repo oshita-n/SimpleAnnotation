@@ -24,7 +24,7 @@ export default function Home() {
         const img = new Image()
         img.src = "elon.jpg" // 描画する画像など
         img.onload = () => {
-            context.drawImage(img,0,0)
+            context.drawImage(img, (1280 - img.width/2)/2 ,(780 - img.height/2)/2, img.width/2, img.height/2)
             // 更にこれに続いて何か処理をしたい場合
             setLoaded(true)
         }
