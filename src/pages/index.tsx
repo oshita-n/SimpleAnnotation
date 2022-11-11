@@ -12,14 +12,14 @@ export default function Home() {
       </Head>
 
       <div>
-        <div className="flex flex-col w-screen h-screen">
+        <div className="flex flex-col w-screen h-[600px]">
           <Header />
           {/* container */}
-          <div className="flex flex-row justify-center relative ...">
-            <Canvas />
+          <div className="flex m-0">
+            <Canvas />    
           </div>
-          
-          <div className="flex flex-row justify-center">
+        </div>
+        <div className="flex flex-row justify-center">
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               前の画像へ
             </button>
@@ -27,7 +27,6 @@ export default function Home() {
               次の画像へ
             </button>
           </div>
-        </div>
       </div>
     </div>
   )

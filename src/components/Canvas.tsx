@@ -67,8 +67,16 @@ function Canvas() {
     {
         const img = new Image()
         img.src = "elon.jpg" // 描画する画像など
+        
         img.onload = () => {
-            ctx.drawImage(img, (1280 - img.width/2)/2 ,(600 - img.height/2)/4, img.width/2, img.height/2)
+          // ctx.drawImage(img, (1280 - img.width/2)/2 ,(600 - img.height/2)/2, img.width/2, img.height/2)
+          const canvas: any = canvasRef.current;
+          const canvas2: any = canvasRef2.current;
+          canvas.width = img.width/2;
+          canvas.height = img.height/2
+          canvas2.width = img.width/2;
+          canvas2.height = img.height/2
+          ctx.drawImage(img, 0, 0, img.width/2, img.height/2)
         }
     }
     // document.addEventListener("click", onClick);
@@ -81,9 +89,9 @@ function Canvas() {
 
   
   return (
-    <div>
-      <canvas width="1280" height="600" className="canvas absolute left-0 top-0" ref={canvasRef} />
-      <canvas width="1280" height="600" className="canvas absolute left-0 top-0" ref={canvasRef2} />
+    <div className='relative p-0 w-full	h-full box-content before;content-[""] before:block before:pt-[50%]'>
+      <canvas className='m-0 p-0 absolute top-0 left-0 box-content' ref={canvasRef} />
+      <canvas className='m-0 p-0 absolute top-0 left-0 box-content' ref={canvasRef2} />
     </div>
   );
 }
