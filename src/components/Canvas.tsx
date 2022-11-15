@@ -28,7 +28,7 @@ function Canvas() {
   const mouseMove = (e: any) => {
     const ctx: CanvasRenderingContext2D = getContext()
     if (origin) { 
-      if (!imageData) {
+      if (imageData) {
         ctx.putImageData(imageData, origin.x, origin.y)
       }
       drawRect(e);
@@ -39,12 +39,12 @@ function Canvas() {
     const ctx: CanvasRenderingContext2D = getContext()
     if (origin) {
       console.log(origin.x, origin.y, e.offsetX - origin.x, e.offsetY - origin.y)
+      imageData = ctx.getImageData(origin.x, origin.y, e.offsetX - origin.x, e.offsetY - origin.y)
       ctx.strokeStyle = "#00ff00";
-      // ctx.clearRect(0, 0, canvas_w, canvas_h);
+      // ctx.clearRect(origin.x, origin.y, e.offsetX - origin.x, e.offsetY - origin.y);
       ctx.beginPath();
       ctx.rect(origin.x, origin.y, e.offsetX - origin.x, e.offsetY - origin.y); 
       ctx.stroke(); 
-      imageData = ctx.getImageData(origin.x, origin.y, e.offsetX - origin.x, e.offsetY - origin.y)
     }
   }
 
