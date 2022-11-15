@@ -27,6 +27,7 @@ function Canvas() {
     const ctx: CanvasRenderingContext2D = getContext();
     if (origin) { 
       if (imageData) {
+        console.log(origin)
         ctx.putImageData(imageData, origin.x, origin.y)
       }
       drawRect(e);
@@ -34,25 +35,23 @@ function Canvas() {
   }
 
   const drawRect = (e: any) => {
+    
     const ctx: CanvasRenderingContext2D = getContext()
     if (origin) {
       console.log(origin.x, origin.y, e.offsetX - origin.x, e.offsetY - origin.y)
-      imageData = ctx.getImageData(origin.x, origin.y, e.offsetX+10 - origin.x, e.offsetY+10 - origin.y) // widthとheightがマイナスにならないよに値を足す
-      ctx.strokeStyle = "#00ff00";
-      // ctx.clearRect(origin.x, origin.y, e.offsetX - origin.x, e.offsetY - origin.y);
-      ctx.beginPath();
-      ctx.rect(origin.x, origin.y, e.offsetX - origin.x, e.offsetY - origin.y); 
-      ctx.stroke(); 
-      ctx.save()
+      if (e.offsetX - origin.x >= 0 &&  e.offsetY - origin.y >= 0) { // 左上から下に線を引く場合のみ考慮
+        imageData = ctx.getImageData(origin.x, origin.y, e.offsetX+10 - origin.x, e.offsetY+10 - origin.y) // widthとheightがマイナスにならないよに値を足す
+        ctx.strokeStyle = "#00ff00";
+        // ctx.clearRect(origin.x, origin.y, e.offsetX - origin.x, e.offsetY - origin.y);
+        ctx.beginPath();
+        ctx.rect(origin.x, origin.y, e.offsetX - origin.x, e.offsetY - origin.y); 
+        ctx.stroke(); 
+        ctx.save();
+      }
     }
   }
 
   const mouseUp = (e: any) => {
-    // console.log(origin.x, origin.y, e.offsetX - origin.x, e.offsetY - origin.y)
-    // const ctx: CanvasRenderingContext2D = getContext();
-    // if (imageData) {
-    //   ctx.putImageData(imageData, origin.x, origin.y)
-    // }
     imageData = null;
     origin = null;
   }
