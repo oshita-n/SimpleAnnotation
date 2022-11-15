@@ -1,64 +1,60 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 function Canvas() {
   const canvasRef = useRef(null);
-  const canvasRef2 = useRef(null);
-  var x = 0;
-  var y = 0;
+  var canvas_w = 0;
+  var canvas_h = 0;
   var origin: any = {}
+  var imageData: any = new Uint8ClampedArray([
+      255, 0, 0, 128,
+      255, 0, 0, 128,
+      255, 0, 0, 128,
+      255, 0, 0, 128
+    ]);
+
+  // const [cordinate, setCordinate] = useState(0);
 
   const getContext = (): CanvasRenderingContext2D => {
     const canvas: any = canvasRef.current;
     return canvas.getContext('2d');
   };
-
-  const getContext2 = (): CanvasRenderingContext2D => {
-    const canvas: any = canvasRef2.current;
-    return canvas.getContext('2d');
-  };
-
-  const onClick = (e: any) => {
-    /*
-        * rectでcanvasの絶対座標位置を取得し、
-        * クリック座標であるe.clientX,e.clientYからその分を引く
-        * ※クリック座標はdocumentからの位置を返すため
-        * ※rectはスクロール量によって値が変わるので、onClick()内でつど定義
-        */
-    var rect = e.target.getBoundingClientRect();
-    
-    x = e.clientX - rect.left;
-    y = e.clientY - rect.top;
-
-    draw();
-  };
   
   const mouseDown = (e: any) => {
-    origin = {x: e.offsetX, y: e.offsetY}; 
+    origin = {x: e.offsetX, y: e.offsetY};
+    console.log(origin)
+    // cordinates[i] = {x: e.offsetX, y: e.offsetY}; 
   }
 
   const mouseMove = (e: any) => {
-    const ctx: CanvasRenderingContext2D = getContext2()
+    const ctx: CanvasRenderingContext2D = getContext()
     if (origin) { 
-        ctx.strokeStyle = "#00ff00";
-        ctx.clearRect(0, 0, 1280, 600);
-        ctx.beginPath();
-        ctx.rect(origin.x, origin.y, e.offsetX - origin.x, e.offsetY - origin.y); 
-        ctx.stroke(); 
+      if (!imageData) {
+        ctx.putImageData(imageData, origin.x, origin.y)
+      }
+      drawRect(e);
+    }
+  }
+
+  const drawRect = (e: any) => {
+    const ctx: CanvasRenderingContext2D = getContext()
+    if (origin) {
+      console.log(origin.x, origin.y, e.offsetX - origin.x, e.offsetY - origin.y)
+      ctx.strokeStyle = "#00ff00";
+      // ctx.clearRect(0, 0, canvas_w, canvas_h);
+      ctx.beginPath();
+      ctx.rect(origin.x, origin.y, e.offsetX - origin.x, e.offsetY - origin.y); 
+      ctx.stroke(); 
+      imageData = ctx.getImageData(origin.x, origin.y, e.offsetX - origin.x, e.offsetY - origin.y)
     }
   }
 
   const mouseUp = (e: any) => {
+    // console.log(origin.x, origin.y, e.offsetX - origin.x, e.offsetY - origin.y)
     origin = null;
-  }
-
-  function draw() {
-    const ctx: CanvasRenderingContext2D = getContext()
-    // 描画処理
-    ctx.fillStyle = '#00ff00'
-    ctx.beginPath()
-    ctx.ellipse(x, y, 3, 3, 0, 0, Math.PI * 2);
-    ctx.fill()
-    ctx.closePath()
+    //console.log(i)
+    // cordinates[i] = {x:cordinates[i].x, y:cordinates[i].y, w: e.offsetX - cordinates[i].x, h: e.offsetY - cordinates[i].y}
+    // setCordinate(i)
+    // i = i + 1
   }
 
   useEffect(() => {
@@ -71,12 +67,11 @@ function Canvas() {
         img.onload = () => {
           // ctx.drawImage(img, (1280 - img.width/2)/2 ,(600 - img.height/2)/2, img.width/2, img.height/2)
           const canvas: any = canvasRef.current;
-          const canvas2: any = canvasRef2.current;
           canvas.width = img.width/2;
           canvas.height = img.height/2
-          canvas2.width = img.width/2;
-          canvas2.height = img.height/2
           ctx.drawImage(img, 0, 0, img.width/2, img.height/2)
+          canvas_w = img.width/2,
+          canvas_h = img.height/2
         }
     }
     // document.addEventListener("click", onClick);
@@ -86,12 +81,10 @@ function Canvas() {
 
     ctx.save();
   })
-
   
   return (
-    <div className='relative p-0 w-full	h-full box-content before;content-[""] before:block before:pt-[50%]'>
-      <canvas className='m-0 p-0 absolute top-0 left-0 box-content' ref={canvasRef} />
-      <canvas className='m-0 p-0 absolute top-0 left-0 box-content' ref={canvasRef2} />
+    <div>
+      <canvas className='m-0 p-0' ref={canvasRef} />
     </div>
   );
 }

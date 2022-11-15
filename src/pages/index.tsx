@@ -15,7 +15,7 @@ export default function Home() {
         <div className="flex flex-col w-screen h-[600px]">
           <Header />
           {/* container */}
-          <div className="flex m-5">
+          <div className="flex justify-center mt-5">
             <Canvas />    
           </div>
         </div>
